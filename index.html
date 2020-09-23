@@ -1,0 +1,47 @@
+<style>
+  div {
+    border: 2px solid rebeccapurple;
+    padding: 20px;
+    width: 300px;
+    border-radius: 4px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  input {
+    padding: 8px 12px;
+    border: 2px solid rebeccapurple;
+    border-radius: 4px;
+    margin: 0 0 12px 0;
+    width: 100%;
+  }
+  button {
+    padding: 8px 12px;
+    border: 2px solid rebeccapurple;
+    border-radius: 4px;
+    text-transform: uppercase;
+    color: rebeccapurple;
+    width: 100%;
+  }
+</style>
+<div>
+  <input />
+  <button onclick="{roll()}">Roll the Dice</button>
+</div>
+<script>
+  function rollDiceWith(sides) {
+    return Math.ceil(Math.random() * sides);
+  }
+  function roll() {
+    const inputElem = document.querySelector("input");
+    const inputValue = inputElem.value;
+    const numOfDiceSides = parseInt(inputValue);
+    if (isNaN(numOfDiceSides)) {
+      return alert("Oops... maybe that was not a number?");
+    }
+    const result = rollDiceWith(numOfDiceSides);
+    alert(result);
+  }
+</script>
