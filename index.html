@@ -28,11 +28,11 @@
 </style>
 <div class="container">
   <input />
-  <button onclick="{roll()}">Roll the Dice</button>
+  <button onclick="{start()}">Roll the Dice</button>
   <div id="result"></div>
 </div>
 <script>
-  // day 4 js part 2
+  // day 5 js part 3
   function writeResult(result) {
     const resultElem = document.querySelector("#result");
     resultElem.innerHTML = result;
@@ -40,15 +40,13 @@
   function rollDiceWith(sides) {
     return Math.ceil(Math.random() * sides);
   }
-  function roll() {
-    const inputElem = document.querySelector("input");
-    const inputValue = inputElem.value;
-    const values = inputValue.split("d");
+  function roll(what) {
+    const values = what.split("d");
     let numOfRolls, numOfDiceSides;
     // alert(JSON.stringify(values));
     if (values.length === 1) {
-      numOfRolls = 1;
-      numOfDiceSides = parseInt(values[0]);
+      numOfRolls = parseInt(values[0]);
+      numOfDiceSides = 1;
     } else if (values.length === 2) {
       numOfRolls = parseInt(values[0]);
       numOfDiceSides = parseInt(values[1]);
@@ -64,6 +62,32 @@
     while (numOfRolls > 0) {
       result = result + rollDiceWith(numOfDiceSides);
       numOfRolls = numOfRolls - 1;
+    }
+    return result;
+  }
+
+  function start() {
+    const inputElem = document.querySelector("input");
+    const inputValue = inputElem.value;
+    const posSections = inputValue.split("+");
+    let numberOfPosSections = posSections.length - 1;
+    let result = 0;
+    while (numberOfPosSections >= 0) {
+      const posSection = posSections[numberOfPosSections];
+
+      const negSections = posSection.split("-");
+      let numberOfNegSections = negSections.length - 1;
+
+      while (numberOfNegSections >= 0) {
+        if (numberOfNegSections === 0) {
+          result = result + roll(negSections[numberOfNegSections]);
+        } else {
+          result = result - roll(negSections[numberOfNegSections]);
+        }
+        numberOfNegSections = numberOfNegSections - 1;
+      }
+
+      numberOfPosSections = numberOfPosSections - 1;
     }
     writeResult(result);
   }
