@@ -1,7 +1,7 @@
 {
-  "name": "dnd-dice",
+  "name": "dnd-dice-github",
   "version": "1.0.0",
-  "description": "DND DICE THINGS",
+  "description": "",
   "main": "index.html",
   "scripts": {
     "start": "serve",

@@ -1,5 +1,5 @@
 <style>
-  div {
+  .container {
     border: 2px solid rebeccapurple;
     padding: 20px;
     width: 300px;
@@ -26,23 +26,45 @@
     width: 100%;
   }
 </style>
-<div>
+<div class="container">
   <input />
   <button onclick="{roll()}">Roll the Dice</button>
+  <div id="result"></div>
 </div>
 <script>
-  // day 3 js part 1
+  // day 4 js part 2
+  function writeResult(result) {
+    const resultElem = document.querySelector("#result");
+    resultElem.innerHTML = result;
+  }
   function rollDiceWith(sides) {
     return Math.ceil(Math.random() * sides);
   }
   function roll() {
     const inputElem = document.querySelector("input");
     const inputValue = inputElem.value;
-    const numOfDiceSides = parseInt(inputValue);
-    if (isNaN(numOfDiceSides)) {
-      return alert("Oops... maybe that was not a number?");
+    const values = inputValue.split("d");
+    let numOfRolls, numOfDiceSides;
+    // alert(JSON.stringify(values));
+    if (values.length === 1) {
+      numOfRolls = 1;
+      numOfDiceSides = parseInt(values[0]);
+    } else if (values.length === 2) {
+      numOfRolls = parseInt(values[0]);
+      numOfDiceSides = parseInt(values[1]);
+    } else {
+      return writeResult(
+        "Oops... we were looking for something like `6` or `3d6`."
+      );
     }
-    const result = rollDiceWith(numOfDiceSides);
-    alert(result);
+    if (isNaN(numOfDiceSides) || isNaN(numOfRolls)) {
+      return writeResult("Oops... maybe that was not a number?");
+    }
+    let result = 0;
+    while (numOfRolls > 0) {
+      result = result + rollDiceWith(numOfDiceSides);
+      numOfRolls = numOfRolls - 1;
+    }
+    writeResult(result);
   }
 </script>
